@@ -1,0 +1,84 @@
+<view class="container">
+  <!-- 顶部欢迎区 -->
+  <view class="hero">
+    <image class="hero-img" src="/images/chiikawa_main.jpg" mode="aspectFill"></image>
+    <view class="hero-text">
+      <view class="hello">今天也要好好吃饭哦～</view>
+      <view class="date-text">{{today}}</view>
+    </view>
+  </view>
+
+  <!-- 身份切换 -->
+  <view class="role-bar card">
+    <view class="flex-between">
+      <view class="flex-center">
+        <text class="role-emoji">{{roleEmoji}}</text>
+        <text class="role-name">当前是 {{roleName}} 的餐盘</text>
+      </view>
+      <view class="switch-btn" bindtap="switchRole">切换</view>
+    </view>
+  </view>
+
+  <!-- 今日能量 -->
+  <view class="card energy-card">
+    <view class="flex-between">
+      <view>
+        <view class="energy-title">今日摄入</view>
+        <view class="energy-value">{{todayCalories}} <text class="unit">大卡</text></view>
+      </view>
+      <view class="energy-ring">
+        <text class="ring-percent">{{calPercent}}%</text>
+        <text class="ring-label">/ {{target}}</text>
+      </view>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-inner" style="width: {{calPercent}}%"></view>
+    </view>
+  </view>
+
+  <!-- 今日点餐概览 -->
+  <view class="card">
+    <view class="title">今日餐盘 🍽️</view>
+    <view class="meal-list">
+      <view class="meal-item" wx:for="{{['breakfast','lunch','dinner','snack']}}" wx:for-item="meal" wx:key="*this">
+        <view class="meal-head flex-between">
+          <text class="meal-label">{{mealEmoji[meal]}} {{mealName[meal]}}</text>
+          <text class="meal-count" wx:if="{{todayOrders[meal].length > 0}}">{{todayOrders[meal].length}}样</text>
+          <text class="meal-count empty" wx:else>还没点</text>
+        </view>
+        <view class="meal-foods" wx:if="{{todayOrders[meal].length > 0}}">
+          <text class="food-chip" wx:for="{{todayOrders[meal]}}" wx:for-item="food" wx:key="_id">
+            {{food.emoji || '🍴'}} {{food.menuName}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-grid">
+    <view class="quick-item" bindtap="goOrder">
+      <text class="quick-icon">🍱</text>
+      <text class="quick-text">去点餐</text>
+    </view>
+    <view class="quick-item" bindtap="goMenu">
+      <text class="quick-icon">📖</text>
+      <text class="quick-text">菜品管理</text>
+    </view>
+    <view class="quick-item" bindtap="goNutrition">
+      <text class="quick-icon">📊</text>
+      <text class="quick-text">营养统计</text>
+    </view>
+    <view class="quick-item" bindtap="goCouple">
+      <text class="quick-icon">💕</text>
+      <text class="quick-text">想你啦</text>
+    </view>
+    <view class="quick-item" bindtap="goWeight">
+      <text class="quick-icon">⚖️</text>
+      <text class="quick-text">体重记录</text>
+    </view>
+  </view>
+
+  <view class="footer-tip">— 用心吃饭，好好相爱 —</view>
+  <view class="tab-placeholder"></view>
+</view>

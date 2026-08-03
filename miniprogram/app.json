@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/order",
+    "pages/menu/menu",
+    "pages/nutrition/nutrition",
+    "pages/couple/couple",
+    "pages/weight/weight"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFD7E0",
+    "navigationBarTitleText": "师兄宝宝和老婆大人的专属厨房！",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFF5F7"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#B0A0A0",
+    "selectedColor": "#FF6B8A",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "点餐"
+      },
+      {
+        "pagePath": "pages/couple/couple",
+        "text": "互动"
+      },
+      {
+        "pagePath": "pages/weight/weight",
+        "text": "体重"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "cloud": true
+}

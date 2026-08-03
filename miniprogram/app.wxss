@@ -1,0 +1,97 @@
+/* 全局样式 - 吉伊卡哇风格 */
+page {
+  background-color: #FFF5F7;
+  background-image: linear-gradient(180deg, #FFE5EC 0%, #FFF5F7 30%);
+  background-attachment: fixed;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  color: #5A4A4A;
+  font-size: 28rpx;
+  min-height: 100vh;
+}
+
+view, text, button, input, textarea {
+  box-sizing: border-box;
+}
+
+/* 主色 */
+.bg-primary { background-color: #FFD7E0; }
+.bg-pink { background-color: #FF85A2; }
+.bg-cream { background-color: #FFF5F7; }
+
+/* 卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  padding: 30rpx;
+  margin: 20rpx;
+  box-shadow: 0 6rpx 20rpx rgba(255, 133, 162, 0.12);
+  border: 2rpx solid #FFE5EC;
+}
+
+/* 按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #FFB3C6, #FF85A2);
+  color: #FFFFFF;
+  border-radius: 44rpx;
+  padding: 22rpx 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 500;
+  box-shadow: 0 6rpx 16rpx rgba(255, 133, 162, 0.35);
+  border: none;
+}
+
+.btn-primary::after { border: none; }
+
+.btn-cute {
+  background: #FFE5EC;
+  color: #FF6B8A;
+  border-radius: 36rpx;
+  padding: 18rpx 32rpx;
+  text-align: center;
+  border: 2rpx solid #FFD7E0;
+  font-size: 28rpx;
+}
+
+.btn-cute::after { border: none; }
+
+/* 标题 */
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #5A4A4A;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: #B0A0A0;
+}
+
+/* flex 工具 */
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 8rpx 22rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+.tag-breakfast { background: #FFF0D4; color: #D8942C; }
+.tag-lunch { background: #FFE5EC; color: #FF6B8A; }
+.tag-dinner { background: #E8E0FF; color: #8B7FE8; }
+.tag-snack { background: #D4F0E8; color: #4A9B85; }
+
+/* 占位 */
+.empty-tip {
+  text-align: center;
+  color: #C8B8B8;
+  font-size: 26rpx;
+  padding: 60rpx 0;
+}

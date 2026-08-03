@@ -1,0 +1,67 @@
+<view class="container">
+  <!-- 日期和身份 -->
+  <view class="top-bar card">
+    <view class="flex-between">
+      <view>
+        <view class="date-label">{{date}}</view>
+        <view class="role-text">{{roleEmoji}} {{roleName}} 的营养报告</view>
+      </view>
+      <view class="switch-btn" bindtap="switchRole">看看TA</view>
+    </view>
+  </view>
+
+  <!-- 总览 -->
+  <view class="overview card">
+    <view class="cal-circle">
+      <text class="cal-num">{{total.calories}}</text>
+      <text class="cal-unit">大卡</text>
+    </view>
+    <view class="cal-label">今日总摄入 🌸</view>
+    <view class="cal-tip" wx:if="{{calPercent >= 100}}">今日能量已达标，注意别吃太多哦～</view>
+    <view class="cal-tip" wx:else>还可摄入 {{target.calories - total.calories}} 大卡</view>
+  </view>
+
+  <!-- 营养明细 9项 -->
+  <view class="card">
+    <view class="title">营养明细 📊（共9项）</view>
+    <view class="nutri-item" wx:for="{{nutriMeta}}" wx:key="key" wx:if="{{item.key !== 'calories'}}">
+      <view class="nutri-head flex-between">
+        <text class="nutri-name">{{item.icon}} {{item.name}}</text>
+        <text class="nutri-val">{{total[item.key]}}{{item.unit}} / {{item.target}}{{item.unit}} ({{percents[item.key]}}%)</text>
+      </view>
+      <view class="nutri-bar"><view class="nutri-inner {{item.color}}" style="width: {{percents[item.key]}}%"></view></view>
+    </view>
+  </view>
+
+  <!-- 营养小贴士 -->
+  <view class="card tips-card">
+    <view class="title">健康小贴士 💡</view>
+    <view class="tip-line" wx:if="{{percents.fiber < 60}}">🥦 膳食纤维偏少，可多吃点蔬菜水果哦</view>
+    <view class="tip-line" wx:if="{{percents.sugar >= 100}}">🍬 今日糖分摄入较高，少喝点奶茶呀～</view>
+    <view class="tip-line" wx:if="{{percents.sodium >= 100}}">🧂 钠摄入偏高，注意清淡饮食</view>
+    <view class="tip-line" wx:if="{{percents.calcium < 60}}">🦴 钙摄入不足，多喝牛奶或吃豆制品</view>
+    <view class="tip-line" wx:if="{{percents.protein < 60}}">💪 蛋白质偏少，记得吃点肉蛋奶</view>
+    <view class="tip-line" wx:if="{{percents.fiber >= 60 && percents.sugar < 100 && percents.sodium < 100 && percents.calcium >= 60 && percents.protein >= 60}}">🌟 营养很均衡，继续保持哦～</view>
+  </view>
+
+  <!-- 餐次分布 -->
+  <view class="card">
+    <view class="title">餐次分布 🍽️</view>
+    <view class="meal-dist" wx:for="{{['breakfast','lunch','dinner','snack']}}" wx:for-item="meal" wx:key="*this">
+      <view class="meal-dist-head flex-between">
+        <text class="md-name">{{mealEmoji[meal]}} {{mealName[meal]}}</text>
+        <text class="md-cal">{{mealCal[meal]}} 大卡</text>
+      </view>
+      <view class="meal-bar">
+        <view class="meal-inner" style="width: {{total.calories ? (mealCal[meal] / total.calories * 100) : 0}}%"></view>
+      </view>
+      <view class="meal-foods" wx:if="{{grouped[meal].length > 0}}">
+        <text class="food-tag" wx:for="{{grouped[meal]}}" wx:for-item="f" wx:key="_id">{{f.emoji}} {{f.menuName}}</text>
+      </view>
+      <view class="meal-empty" wx:else>还没点餐哦</view>
+    </view>
+  </view>
+
+  <view class="footer-tip">— 均衡饮食，健康相爱 —</view>
+  <view style="height:40rpx"></view>
+</view>

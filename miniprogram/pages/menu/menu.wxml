@@ -1,0 +1,122 @@
+<view class="container">
+  <!-- 餐次切换 -->
+  <view class="meal-tabs">
+    <view class="meal-tab {{currentMeal === item ? 'active' : ''}}" wx:for="{{meals}}" wx:key="*this" data-meal="{{item}}" bindtap="switchMeal">
+      <text class="mt-emoji">{{mealEmoji[item]}}</text>
+      <text class="mt-text">{{mealName[item]}}</text>
+    </view>
+  </view>
+
+  <view class="section-title flex-between">
+    <text>{{mealEmoji[currentMeal]}} {{mealName[currentMeal]}}菜品 ({{menuList.length}})</text>
+    <view class="title-btns">
+      <view class="btn-cute import-btn" bindtap="importBaseMenu">📥 一键导入</view>
+      <view class="btn-cute clear-btn" bindtap="clearCurrentMeal">🧹 一键清空</view>
+      <view class="btn-primary add-btn-top" bindtap="showAddForm">+ 添加</view>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-card" wx:for="{{menuList}}" wx:key="_id">
+      <view class="menu-top">
+        <image wx:if="{{item.imgUrl}}" class="menu-img" src="{{item.imgUrl}}" mode="aspectFill"></image>
+        <view wx:else class="menu-emoji">{{item.emoji || '🍴'}}</view>
+        <view class="menu-info">
+          <view class="menu-name">
+            {{item.name}}
+            <text class="match-tag {{item.matched === false ? 'unmatched' : ''}}">{{item.matched === false ? '估算' : '已识别'}}</text>
+          </view>
+          <view class="menu-nutri">
+            <text>{{item.calories}}大卡</text>
+            <text class="dot">·</text>
+            <text>脂肪{{item.fat}}g</text>
+            <text class="dot">·</text>
+            <text>蛋白{{item.protein}}g</text>
+            <text class="dot">·</text>
+            <text>纤维{{item.fiber || 0}}g</text>
+          </view>
+        </view>
+      </view>
+      <view class="menu-actions">
+        <text class="edit-btn" data-food="{{item}}" bindtap="editMenu">✏️ 编辑</text>
+        <text class="del-btn" data-id="{{item._id}}" bindtap="deleteMenu">🗑️ 删除</text>
+      </view>
+    </view>
+    <view class="empty-tip" wx:if="{{menuList.length === 0}}">
+      还没有菜品，点击"+添加"创建第一道菜吧～
+    </view>
+  </view>
+  <view style="height:60rpx"></view>
+
+  <!-- 表单弹窗 -->
+  <view class="modal-mask" wx:if="{{showForm}}" bindtap="hideForm">
+    <view class="modal-content" catchtap="">
+      <view class="modal-title">{{editId ? '✏️ 编辑菜品' : '➕ 添加菜品'}}</view>
+
+      <view class="form-item">
+        <text class="form-label">菜品名称（营养会自动识别 ✨）</text>
+        <input class="form-input" value="{{form.name}}" bindinput="inputName" placeholder="如：番茄炒蛋" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">菜品图片（可选，上传后优先显示）</text>
+        <view class="img-upload-area">
+          <view wx:if="{{form.imgUrl}}" class="img-preview">
+            <image class="preview-img" src="{{form.imgUrl}}" mode="aspectFill"></image>
+            <view class="img-remove" catchtap="removeImage">×</view>
+          </view>
+          <view wx:else class="img-upload-btn" catchtap="chooseImage">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">点击上传图片</text>
+            <text class="upload-tip">相册/拍照</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">选个图标（无图片时显示）</text>
+        <view class="emoji-grid">
+          <text class="emoji-opt {{form.emoji === item ? 'active' : ''}}" wx:for="{{emojiOptions}}" wx:key="*this" data-emoji="{{item}}" bindtap="pickEmoji">{{item}}</text>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">所属餐次</text>
+        <view class="cat-row">
+          <view class="cat-opt {{form.category === item ? 'active' : ''}}" wx:for="{{meals}}" wx:key="*this" data-cat="{{item}}" bindtap="pickCategory">
+            {{mealEmoji[item]}} {{mealName[item]}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 自动识别的营养 -->
+      <view class="nutri-result" wx:if="{{autoNutri}}">
+        <view class="nutri-result-head">
+          <text class="nutri-result-title">🔍 自动识别营养</text>
+          <text class="match-badge {{matched ? '' : 'unmatched'}}">{{matched ? '✓ 已匹配' : '估算值'}}</text>
+        </view>
+        <view class="nutri-grid">
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.calories}}</text><text class="nc-name">🔥 热量大卡</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.protein}}</text><text class="nc-name">💪 蛋白g</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.fat}}</text><text class="nc-name">🥩 脂肪g</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.carb}}</text><text class="nc-name">🍚 碳水g</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.fiber}}</text><text class="nc-name">🥦 纤维g</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.sugar}}</text><text class="nc-name">🍬 糖g</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.sodium}}</text><text class="nc-name">🧂 钠mg</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.calcium}}</text><text class="nc-name">🦴 钙mg</text></view>
+          <view class="nutri-cell"><text class="nc-val">{{autoNutri.vitA}}</text><text class="nc-name">🥕 维Aμg</text></view>
+        </view>
+        <view class="re-match" bindtap="reMatch">🔄 重新识别</view>
+        <view class="nutri-tip">输入菜名会自动匹配营养库，无需手动填写</view>
+      </view>
+      <view class="nutri-result empty" wx:else>
+        <text>👆 输入菜名后，营养会自动填入</text>
+      </view>
+
+      <view class="modal-btns">
+        <view class="btn-cute" bindtap="hideForm">取消</view>
+        <view class="btn-primary" bindtap="saveMenu">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

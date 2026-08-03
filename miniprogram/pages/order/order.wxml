@@ -1,0 +1,87 @@
+<view class="container">
+  <!-- 视角切换 -->
+  <view class="role-bar card">
+    <view class="flex-between">
+      <view class="flex-center">
+        <text class="role-emoji">{{roleEmoji}}</text>
+        <text class="role-name">正在为 {{roleName}} 点餐</text>
+      </view>
+      <view class="switch-btn" bindtap="switchRole">看看TA的餐盘</view>
+    </view>
+  </view>
+
+  <!-- 餐次切换 -->
+  <view class="meal-tabs">
+    <view class="meal-tab {{currentMeal === item ? 'active' : ''}}" wx:for="{{meals}}" wx:key="*this" data-meal="{{item}}" bindtap="switchMeal">
+      <text class="mt-emoji">{{mealEmoji[item]}}</text>
+      <text class="mt-text">{{mealName[item]}}</text>
+    </view>
+  </view>
+
+  <!-- 随机选餐 -->
+  <view class="random-bar card">
+    <view class="random-text">
+      <text class="random-emoji">🎲</text>
+      <text class="random-desc">不知道吃什么？让小可爱帮你选～</text>
+    </view>
+    <view class="btn-primary random-btn" bindtap="randomPick">随机选一个</view>
+  </view>
+
+  <!-- 菜品列表 -->
+  <view class="section-title flex-between">
+    <text>{{mealEmoji[currentMeal]}} {{mealName[currentMeal]}}菜单</text>
+    <text class="add-link" bindtap="goMenu">+ 添加菜品</text>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-item" wx:for="{{menuList}}" wx:key="_id">
+      <image wx:if="{{item.imgUrl}}" class="menu-img" src="{{item.imgUrl}}" mode="aspectFill"></image>
+      <view wx:else class="menu-emoji">{{item.emoji || '🍴'}}</view>
+      <view class="menu-info">
+        <view class="menu-name">{{item.name}}</view>
+        <view class="menu-nutri">
+          <text>{{item.calories}}大卡</text>
+          <text class="dot">·</text>
+          <text>脂肪{{item.fat}}g</text>
+          <text class="dot">·</text>
+          <text>蛋白{{item.protein}}g</text>
+        </view>
+      </view>
+      <view class="add-btn" data-food="{{item}}" bindtap="addOrder">+</view>
+    </view>
+    <view class="empty-tip" wx:if="{{menuList.length === 0}}">
+      还没有菜品，点击上方"添加菜品"哦～
+    </view>
+  </view>
+
+  <!-- 已选菜品 -->
+  <view class="section-title" wx:if="{{selectedFoods.length > 0}}">🧺 已加入餐盘</view>
+  <view class="selected-list" wx:if="{{selectedFoods.length > 0}}">
+    <view class="selected-item" wx:for="{{selectedFoods}}" wx:key="_id">
+      <text class="sel-name">{{item.emoji}} {{item.menuName}}</text>
+      <text class="sel-cal">{{item.calories}}大卡</text>
+      <text class="remove-btn" data-id="{{item._id}}" bindtap="removeOrder">×</text>
+    </view>
+  </view>
+
+  <view class="tab-placeholder"></view>
+
+  <!-- 随机结果弹窗 -->
+  <view class="modal-mask" wx:if="{{showRandom}}" bindtap="closeRandom">
+    <view class="modal-content" catchtap="">
+      <view class="modal-emoji">🎉</view>
+      <view class="modal-title">就决定是你啦！</view>
+      <view class="modal-food" wx:if="{{randomFood}}">
+        <text class="modal-food-emoji">{{randomFood.emoji || '🍴'}}</text>
+        <text class="modal-food-name">{{randomFood.name}}</text>
+      </view>
+      <view class="modal-nutri" wx:if="{{randomFood}}">
+        {{randomFood.calories}}大卡 · 脂肪{{randomFood.fat}}g · 蛋白{{randomFood.protein}}g
+      </view>
+      <view class="modal-btns">
+        <view class="btn-cute" bindtap="cancelRandom">换一个</view>
+        <view class="btn-primary" bindtap="confirmRandom">就吃它！</view>
+      </view>
+    </view>
+  </view>
+</view>

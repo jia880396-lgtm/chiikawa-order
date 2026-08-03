@@ -1,0 +1,322 @@
+.container { padding-bottom: 40rpx; }
+
+/* 图表卡片 */
+.chart-card { padding: 30rpx 24rpx; }
+.chart-card .title { margin-bottom: 20rpx; }
+
+/* 视图切换 */
+.view-switch {
+  display: flex;
+  background: #FFF5F7;
+  border-radius: 28rpx;
+  padding: 8rpx;
+  margin-bottom: 20rpx;
+}
+.switch-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  color: #8A6A6A;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.switch-item.active {
+  background: #FFFFFF;
+  color: #FF6B8A;
+  font-weight: 500;
+  box-shadow: 0 4rpx 12rpx rgba(255, 133, 162, 0.15);
+}
+.switch-item.active.blue { color: #6BB6FF; }
+.switch-item.active.pink { color: #FF6B8A; }
+.dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+  display: inline-block;
+}
+.dot.blue { background: #6BB6FF; }
+.dot.pink { background: #FF6B8A; }
+.dot.blue-fade { background: #B8D8F5; }
+.dot.pink-fade { background: #FFB3C6; }
+
+/* canvas */
+.chart-canvas {
+  width: 100%;
+  height: 240px;
+}
+/* 弹窗打开时 canvas 用占位 view 替代，避免原生组件层级穿透 */
+.chart-placeholder {
+  background: linear-gradient(135deg, #FFF5F7, #FFE5EC);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C8B8B8;
+  font-size: 24rpx;
+  position: relative;
+}
+.chart-placeholder::before {
+  content: '体重图表 📊';
+}
+
+/* 图例 */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  margin-top: 16rpx;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #8A6A6A;
+}
+.legend-dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+.legend-dot.blue { background: #6BB6FF; }
+.legend-dot.pink { background: #FF6B8A; }
+
+/* 统计卡片 */
+.stats-card { padding: 30rpx; }
+.stats-row {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+}
+.stats-role {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #5A4A4A;
+  width: 180rpx;
+}
+.stats-info { flex: 1; }
+.stats-latest {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #FF6B8A;
+}
+.stats-latest.empty { font-size: 28rpx; color: #C8B8B8; font-weight: normal; }
+.stats-latest .unit { font-size: 24rpx; color: #B0A0A0; font-weight: normal; }
+.stats-change {
+  font-size: 24rpx;
+  color: #8A6A6A;
+  margin-top: 6rpx;
+}
+.stats-change.empty { color: #C8B8B8; }
+.change-emoji { margin-left: 8rpx; }
+.stats-divider {
+  height: 2rpx;
+  background: #FFE5EC;
+  margin: 8rpx 0;
+}
+
+/* 记录按钮 */
+.record-btn {
+  margin: 20rpx;
+}
+
+/* 历史记录 */
+.history-card { padding: 30rpx; }
+.history-list { margin-top: 12rpx; }
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 2rpx dashed #FFE5EC;
+}
+.history-item:last-child { border-bottom: none; }
+.hist-emoji {
+  font-size: 44rpx;
+  margin-right: 20rpx;
+  width: 60rpx;
+  text-align: center;
+}
+.hist-info { flex: 1; }
+.hist-date { font-size: 28rpx; color: #5A4A4A; }
+.hist-role { font-size: 22rpx; color: #B0A0A0; margin-top: 4rpx; }
+.hist-weight {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #FF6B8A;
+}
+.hist-weight .unit { font-size: 22rpx; color: #B0A0A0; font-weight: normal; }
+
+.footer-tip {
+  text-align: center;
+  color: #D8B8B8;
+  font-size: 24rpx;
+  margin: 40rpx 0 20rpx;
+  letter-spacing: 4rpx;
+}
+.tab-placeholder { height: 120rpx; }
+
+/* 弹窗（用 wx:if 控制显隐，无需 display 切换；z-index 提到最高避免被遮挡） */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  width: 600rpx;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.15);
+  animation: popIn 0.2s ease;
+}
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #5A4A4A;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+.form-item { margin-bottom: 24rpx; }
+.form-label {
+  font-size: 26rpx;
+  color: #8A6A6A;
+  margin-bottom: 12rpx;
+}
+.role-pick {
+  display: flex;
+  gap: 20rpx;
+}
+.role-option {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  background: #FFF5F7;
+  border: 2rpx solid #FFE5EC;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  color: #8A6A6A;
+}
+.role-option.active.blue-active {
+  background: #E8F2FF;
+  border-color: #6BB6FF;
+  color: #6BB6FF;
+  font-weight: 500;
+}
+.role-option.active.pink-active {
+  background: #FFE5EC;
+  border-color: #FF6B8A;
+  color: #FF6B8A;
+  font-weight: 500;
+}
+.form-input {
+  background: #FFF5F7;
+  border: 2rpx solid #FFE5EC;
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #5A4A4A;
+}
+.form-input.picker { color: #5A4A4A; }
+.modal-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+.modal-actions .btn-cute { flex: 1; }
+.modal-confirm { flex: 1; }
+
+/* ===== 师兄的甜蜜告白弹窗 ===== */
+.sweet-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(90, 74, 74, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.sweet-modal {
+  width: 600rpx;
+  background: linear-gradient(135deg, #FFE5EC, #FFF5F7);
+  border-radius: 40rpx;
+  padding: 60rpx 40rpx 40rpx;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20rpx 60rpx rgba(255, 107, 138, 0.4);
+  animation: sweetPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes sweetPop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.sweet-emoji {
+  font-size: 100rpx;
+  animation: beat 1s ease-in-out infinite;
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+.sweet-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FF6B8A;
+  margin: 20rpx 0;
+}
+.sweet-text {
+  font-size: 32rpx;
+  color: #5A4A4A;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+  padding: 0 20rpx;
+}
+.sweet-btn {
+  background: linear-gradient(135deg, #FFB3C6, #FF6B8A);
+  color: #FFFFFF;
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 24rpx 0;
+  border-radius: 40rpx;
+  box-shadow: 0 8rpx 20rpx rgba(255, 107, 138, 0.4);
+}
+
+/* 飘心动画 */
+.sweet-hearts {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 40rpx;
+}
+.heart {
+  position: absolute;
+  color: #FF6B8A;
+  font-size: 36rpx;
+  opacity: 0;
+}
+.h1 { left: 10%; color: #FF6B8A; font-size: 40rpx; animation: floatUp 3s ease-out infinite 0s; }
+.h2 { left: 30%; color: #FF85A2; font-size: 32rpx; animation: floatUp 3s ease-out infinite 0.6s; }
+.h3 { left: 50%; color: #FF6B8A; font-size: 44rpx; animation: floatUp 3s ease-out infinite 1.2s; }
+.h4 { left: 70%; color: #FFB3C6; font-size: 28rpx; animation: floatUp 3s ease-out infinite 1.8s; }
+.h5 { left: 85%; color: #FF6B8A; font-size: 36rpx; animation: floatUp 3s ease-out infinite 2.4s; }
+@keyframes floatUp {
+  0% { bottom: 0; opacity: 0; transform: translateX(0); }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { bottom: 100%; opacity: 0; transform: translateX(20rpx); }
+}

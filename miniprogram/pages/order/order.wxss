@@ -1,0 +1,160 @@
+.container { padding: 20rpx; }
+
+.role-bar { padding: 24rpx 30rpx; }
+.role-emoji { font-size: 44rpx; margin-right: 16rpx; }
+.role-name { font-size: 28rpx; color: #5A4A4A; }
+.switch-btn {
+  background: #FFD7E0;
+  color: #FF6B8A;
+  padding: 12rpx 28rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.meal-tabs {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 10rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 133, 162, 0.1);
+}
+.meal-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 0;
+  border-radius: 26rpx;
+  transition: all 0.3s;
+}
+.meal-tab.active {
+  background: linear-gradient(135deg, #FFB3C6, #FF85A2);
+  box-shadow: 0 4rpx 12rpx rgba(255, 133, 162, 0.3);
+}
+.mt-emoji { font-size: 40rpx; }
+.mt-text { font-size: 24rpx; margin-top: 4rpx; color: #8A6A6A; }
+.meal-tab.active .mt-text { color: #FFFFFF; font-weight: 500; }
+
+.random-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 20rpx;
+}
+.random-text { display: flex; align-items: center; flex: 1; }
+.random-emoji { font-size: 44rpx; margin-right: 16rpx; }
+.random-desc { font-size: 26rpx; color: #8A6A6A; }
+.random-btn { margin-left: 20rpx; padding: 18rpx 32rpx; font-size: 26rpx; }
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5A4A4A;
+  margin: 30rpx 4rpx 16rpx;
+}
+.add-link { font-size: 26rpx; color: #FF6B8A; font-weight: normal; }
+
+.menu-list { display: flex; flex-direction: column; gap: 16rpx; }
+.menu-item {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  border: 2rpx solid #FFE5EC;
+  box-shadow: 0 4rpx 12rpx rgba(255, 133, 162, 0.08);
+}
+.menu-emoji {
+  font-size: 52rpx;
+  width: 90rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  background: #FFF5F7;
+  border-radius: 20rpx;
+  margin-right: 20rpx;
+}
+.menu-img {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 20rpx;
+  margin-right: 20rpx;
+  background: #FFF5F7;
+  border: 2rpx solid #FFE5EC;
+}
+.menu-info { flex: 1; }
+.menu-name { font-size: 30rpx; font-weight: 500; color: #5A4A4A; }
+.menu-nutri { font-size: 22rpx; color: #B0A0A0; margin-top: 8rpx; }
+.menu-nutri .dot { margin: 0 8rpx; }
+.add-btn {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 56rpx;
+  text-align: center;
+  background: linear-gradient(135deg, #FFB3C6, #FF85A2);
+  color: #FFFFFF;
+  border-radius: 50%;
+  font-size: 40rpx;
+  box-shadow: 0 4rpx 10rpx rgba(255, 133, 162, 0.3);
+}
+
+.selected-list { display: flex; flex-direction: column; gap: 12rpx; }
+.selected-item {
+  display: flex;
+  align-items: center;
+  background: #FFE5EC;
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+}
+.sel-name { flex: 1; font-size: 28rpx; color: #5A4A4A; }
+.sel-cal { font-size: 24rpx; color: #FF6B8A; margin-right: 20rpx; }
+.remove-btn {
+  width: 44rpx;
+  height: 44rpx;
+  line-height: 40rpx;
+  text-align: center;
+  background: #FFFFFF;
+  color: #FF6B8A;
+  border-radius: 50%;
+  font-size: 32rpx;
+}
+
+.tab-placeholder { height: 140rpx; }
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(90, 74, 74, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  width: 560rpx;
+  background: #FFFFFF;
+  border-radius: 36rpx;
+  padding: 50rpx 40rpx;
+  text-align: center;
+  animation: pop 0.3s;
+}
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-emoji { font-size: 80rpx; }
+.modal-title { font-size: 34rpx; font-weight: bold; color: #5A4A4A; margin: 20rpx 0 30rpx; }
+.modal-food {
+  background: #FFF5F7;
+  border-radius: 24rpx;
+  padding: 36rpx;
+  margin-bottom: 20rpx;
+}
+.modal-food-emoji { font-size: 72rpx; display: block; }
+.modal-food-name { font-size: 36rpx; font-weight: bold; color: #FF6B8A; display: block; margin-top: 16rpx; }
+.modal-nutri { font-size: 24rpx; color: #B0A0A0; margin-bottom: 30rpx; }
+.modal-btns { display: flex; gap: 20rpx; }
+.modal-btns .btn-cute, .modal-btns .btn-primary { flex: 1; }

@@ -1,0 +1,139 @@
+<view class="container">
+  <!-- 顶部图表（弹窗打开时隐藏 canvas，避免原生组件层级遮挡弹窗） -->
+  <view class="card chart-card">
+    <view class="title">体重变化 📈</view>
+
+    <!-- 视图切换 -->
+    <view class="view-switch">
+      <view class="{{clsBf}}" data-mode="boyfriend" bindtap="switchView">
+        <text class="{{dotBf}}"></text>👦
+      </view>
+      <view class="{{clsGf}}" data-mode="girlfriend" bindtap="switchView">
+        <text class="{{dotGf}}"></text>👧
+      </view>
+      <view class="{{clsBoth}}" data-mode="both" bindtap="switchView">
+        对比
+      </view>
+    </view>
+
+    <!-- 弹窗打开时用占位 view 代替 canvas，避免原生组件穿透 -->
+    <canvas wx:if="{{!showForm && !showSweetTip}}" type="2d" id="weightChart" class="chart-canvas"></canvas>
+    <view wx:else class="chart-canvas chart-placeholder"></view>
+
+    <!-- 图例 -->
+    <view class="legend">
+      <view class="legend-item" wx:if="{{viewMode === 'boyfriend' || viewMode === 'both'}}">
+        <text class="legend-dot blue"></text><text>👦 男朋友</text>
+      </view>
+      <view class="legend-item" wx:if="{{viewMode === 'girlfriend' || viewMode === 'both'}}">
+        <text class="legend-dot pink"></text><text>👧 女朋友</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="card stats-card">
+    <view class="stats-row" wx:if="{{viewMode === 'boyfriend' || viewMode === 'both'}}">
+      <view class="stats-role">👦 男朋友</view>
+      <view class="stats-info">
+        <view class="stats-latest" wx:if="{{stats.boyfriend.latest}}">
+          {{stats.boyfriend.latest.weight}}<text class="unit"> kg</text>
+        </view>
+        <view class="stats-latest empty" wx:else>暂无记录</view>
+        <view class="stats-change" wx:if="{{stats.boyfriend.latest && stats.boyfriend.count >= 2}}">
+          相比上次 {{stats.boyfriend.changeSign}}{{stats.boyfriend.change}} kg
+          <text class="change-emoji">{{stats.boyfriend.changeEmoji}}</text>
+        </view>
+        <view class="stats-change empty" wx:elif="{{stats.boyfriend.latest}}">共 {{stats.boyfriend.count}} 条记录</view>
+      </view>
+    </view>
+
+    <view class="stats-divider" wx:if="{{viewMode === 'both'}}"></view>
+
+    <view class="stats-row" wx:if="{{viewMode === 'girlfriend' || viewMode === 'both'}}">
+      <view class="stats-role">👧 女朋友</view>
+      <view class="stats-info">
+        <view class="stats-latest" wx:if="{{stats.girlfriend.latest}}">
+          {{stats.girlfriend.latest.weight}}<text class="unit"> kg</text>
+        </view>
+        <view class="stats-latest empty" wx:else>暂无记录</view>
+        <view class="stats-change" wx:if="{{stats.girlfriend.latest && stats.girlfriend.count >= 2}}">
+          相比上次 {{stats.girlfriend.changeSign}}{{stats.girlfriend.change}} kg
+          <text class="change-emoji">{{stats.girlfriend.changeEmoji}}</text>
+        </view>
+        <view class="stats-change empty" wx:elif="{{stats.girlfriend.latest}}">共 {{stats.girlfriend.count}} 条记录</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 记录按钮 -->
+  <view class="btn-primary record-btn" bindtap="openForm">📝 记录体重</view>
+
+  <!-- 历史记录 -->
+  <view class="card history-card">
+    <view class="title">历史记录 📋</view>
+    <view class="empty-tip" wx:if="{{weights.length === 0}}">还没有记录哦~快来记录第一条吧 💕</view>
+    <view class="history-list" wx:else>
+      <view class="history-item" wx:for="{{weights}}" wx:key="_id" data-id="{{item._id}}" bindtap="deleteWeight">
+        <text class="hist-emoji">{{item.roleEmoji}}</text>
+        <view class="hist-info">
+          <view class="hist-date">{{item.date}}</view>
+          <view class="hist-role">{{item.roleName}}</view>
+        </view>
+        <view class="hist-weight">{{item.weight}}<text class="unit"> kg</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer-tip">— 一起变好，一起相爱 —</view>
+  <view class="tab-placeholder"></view>
+
+  <!-- 记录表单弹窗（用 wx:if 彻底控制显隐，避免原生组件层级问题） -->
+  <view class="modal-mask" wx:if="{{showForm}}" bindtap="closeForm">
+    <view class="modal" catchtap="stopPropagation">
+      <view class="modal-title">记录体重 📝</view>
+
+      <view class="form-item">
+        <view class="form-label">身份</view>
+        <view class="role-pick">
+          <view class="{{formClsBf}}" data-role="boyfriend" bindtap="pickRole">👦 男朋友</view>
+          <view class="{{formClsGf}}" data-role="girlfriend" bindtap="pickRole">👧 女朋友</view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">体重 (kg)</view>
+        <input class="form-input" type="digit" placeholder="请输入体重，如 55.5" value="{{form.weight}}" bindinput="onWeightInput" />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">日期</view>
+        <picker mode="date" value="{{form.date}}" end="{{today}}" bindchange="onDateChange">
+          <view class="form-input picker">{{form.date}}</view>
+        </picker>
+      </view>
+
+      <view class="modal-actions">
+        <view class="btn-cute" bindtap="closeForm">取消</view>
+        <view class="btn-primary modal-confirm" bindtap="submitWeight">确认</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 师兄的甜蜜告白弹窗（女朋友记录体重后自动弹出） -->
+  <view class="sweet-mask" wx:if="{{showSweetTip}}" bindtap="closeSweetTip">
+    <view class="sweet-modal" catchtap="">
+      <view class="sweet-hearts">
+        <text class="heart h1">❤</text>
+        <text class="heart h2">❤</text>
+        <text class="heart h3">❤</text>
+        <text class="heart h4">❤</text>
+        <text class="heart h5">❤</text>
+      </view>
+      <view class="sweet-emoji">💋</view>
+      <view class="sweet-title">老婆宝宝～</view>
+      <view class="sweet-text">老婆宝宝是世界上最漂亮最美的宝宝，师兄永远爱你！❤</view>
+      <view class="sweet-btn" catchtap="closeSweetTip">收到师兄的爱 💕</view>
+    </view>
+  </view>
+</view>

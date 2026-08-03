@@ -1,0 +1,65 @@
+<view class="container">
+  <!-- 顶部：想你了大按钮 -->
+  <view class="think-btn" bindtap="sendThink">
+    <image class="think-img" src="/images/chiikawa_couple.jpg" mode="aspectFill"></image>
+    <view class="think-overlay">
+      <view class="think-text">想你了 💕</view>
+      <view class="think-sub">点一下告诉TA</view>
+    </view>
+  </view>
+
+  <!-- 快捷互动区 -->
+  <view class="card quick-section">
+    <view class="quick-title">快来互动吧～</view>
+    <view class="quick-actions">
+      <view class="quick-item" wx:for="{{quickActions}}" wx:key="type" data-type="{{item.type}}" bindtap="quickAction">
+        <view class="quick-circle">{{item.emoji}}</view>
+        <text class="quick-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 互动统计 -->
+  <view class="card stat-bar">
+    <text class="stat-emoji">📊</text>
+    <text class="stat-text">今天你们互相互动了 <text class="stat-num">{{todayCount}}</text> 次 💕</text>
+  </view>
+
+  <!-- 留言板 -->
+  <view class="board-section">
+    <view class="board-title">💌 留言板</view>
+    <view class="card input-bar">
+      <input class="msg-input" placeholder="对TA说点什么吧～" value="{{inputContent}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" maxlength="100" />
+      <view class="btn-primary send-btn" bindtap="sendMessage">发送</view>
+    </view>
+
+    <!-- 留言列表 -->
+    <view class="msg-list">
+      <view class="msg-item {{item.isMine ? 'mine' : 'other'}}" wx:for="{{messages}}" wx:key="_id">
+        <view class="msg-avatar">{{item.roleEmoji}}</view>
+        <view class="msg-bubble">
+          <view class="msg-tag">{{item.typeEmoji}} {{item.typeLabel}}</view>
+          <view class="msg-content">{{item.content}}</view>
+          <view class="msg-time">{{item.timeText}}</view>
+        </view>
+      </view>
+      <view class="empty-tip" wx:if="{{messages.length === 0}}">
+        还没有互动记录，快给TA发个消息吧～
+      </view>
+    </view>
+  </view>
+
+  <view class="tab-placeholder"></view>
+
+  <!-- 爱心飞舞动画 -->
+  <view class="love-mask" wx:if="{{showLoveAnim}}">
+    <view class="love-hearts">
+      <text class="heart" wx:for="{{loveHearts}}" wx:key="index"
+        style="left: {{item.left}}%; animation-delay: {{item.delay}}s; animation-duration: {{item.duration}}s; font-size: {{item.size}}rpx; --heart-x: {{item.offsetX}}rpx; --heart-r: {{item.rotate}}deg;">💕</text>
+    </view>
+    <view class="love-center">
+      <image class="love-img" src="/images/chiikawa_main.jpg" mode="aspectFit"></image>
+      <view class="love-text">想你了 💕</view>
+    </view>
+  </view>
+</view>
