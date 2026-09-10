@@ -1,7 +1,7 @@
 <view class="container">
   <!-- 顶部欢迎区 -->
   <view class="hero">
-    <image class="hero-img" src="/images/chiikawa_main.jpg" mode="aspectFill"></image>
+    <view class="hero-emoji">🍳</view>
     <view class="hero-text">
       <view class="hello">今天也要好好吃饭哦～</view>
       <view class="date-text">{{today}}</view>
