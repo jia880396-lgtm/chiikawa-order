@@ -1,7 +1,7 @@
 <view class="container">
   <!-- 顶部：想你了大按钮 -->
   <view class="think-btn" bindtap="sendThink">
-    <image class="think-img" src="/images/chiikawa_couple.jpg" mode="aspectFill"></image>
+    <view class="think-emoji">💕</view>
     <view class="think-overlay">
       <view class="think-text">想你了 💕</view>
       <view class="think-sub">点一下告诉TA</view>
@@ -58,7 +58,7 @@
         style="left: {{item.left}}%; animation-delay: {{item.delay}}s; animation-duration: {{item.duration}}s; font-size: {{item.size}}rpx; --heart-x: {{item.offsetX}}rpx; --heart-r: {{item.rotate}}deg;">💕</text>
     </view>
     <view class="love-center">
-      <image class="love-img" src="/images/chiikawa_main.jpg" mode="aspectFit"></image>
+      <view class="love-emoji">💕</view>
       <view class="love-text">想你了 💕</view>
     </view>
   </view>
