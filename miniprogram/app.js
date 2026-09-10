@@ -1,4 +1,4 @@
-// app.js - 吉伊卡哇点餐小程序入口
+// app.js - 情侣专属厨房小程序入口
 App({
   onLaunch: function () {
     if (!wx.cloud) {
@@ -37,6 +37,6 @@ App({
   globalData: {
     openid: null,
     role: 'boyfriend', // boyfriend 或 girlfriend，标识当前用户身份
-    cloudEnv: 'cloud1-d4g6itkstacbb3bcb' // 云开发环境ID，请在开发者工具云开发面板查看后填入
+    cloudEnv: '' // 请填入你自己的微信云开发环境 ID（在开发者工具云开发面板查看）
   }
 })
